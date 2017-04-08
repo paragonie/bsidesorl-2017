@@ -10,21 +10,25 @@ use ParagonIE\BsidesOrl2017Talk\{
 };
 use ParagonIE\BsidesOrl2017Talk\Handlers\{
     Logs,
-    StaticPage
+    Personnel,
+    StaticPage,
+    UniquePW
 };
 use ParagonIE\ConstantTime\Binary;
 
 require_once "../vendor/autoload.php";
 
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
-    $r->addRoute('GET', '/users', [StaticPage::class, 'index']);
+    $r->addRoute( 'GET', '/add-user', [StaticPage::class, 'newUser']);
 
-    // {id} must be a number (\d+)
-    $r->addRoute('GET', '/user/{id:\d+}', 'get_user_handler');
+    $r->addRoute( 'GET', '/logs', [Logs::class, 'index']);
 
-    $r->addRoute('GET', '/logs', [Logs::class, 'index']);
+    $r->addRoute( 'GET', '/personnel', [Personnel::class, 'index']);
+    $r->addRoute('POST', '/personnel', [Personnel::class, 'submit']);
 
-    $r->addRoute('GET', '/', [StaticPage::class, 'index']);
+    $r->addRoute( 'GET', '/unique-pw', [UniquePW::class, 'index']);
+
+    $r->addRoute( 'GET', '/', [StaticPage::class, 'index']);
 });
 
 
@@ -90,7 +94,12 @@ try {
         'ip' => $_SERVER['REQUEST_URI'],
         'method' => $_SERVER['REQUEST_METHOD'],
         'uri' => $_SERVER['REQUEST_URI'],
-        'user-agent' => $_SERVER['HTTP_USER_AGENT']
+        'user-agent' => $_SERVER['HTTP_USER_AGENT'],
+        'exception' => [
+            'message' => $ex->getMessage(),
+            'line' => $ex->getLine(),
+            'trace' => $ex->getTrace()
+        ]
     ]);
 
     echo 'An unexpected error has occurred.', PHP_EOL;

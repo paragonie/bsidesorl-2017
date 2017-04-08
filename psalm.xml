@@ -10,5 +10,6 @@
         <PropertyNotSetInConstructor errorLevel="info" />
         <TooFewArguments errorLevel="info" />
         <TooManyArguments errorLevel="info" />
+        <UndefinedConstant errorLevel="info" />
     </issueHandlers>
 </psalm>

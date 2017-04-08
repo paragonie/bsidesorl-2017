@@ -7,7 +7,8 @@ use GuzzleHttp\Psr7\Response;
 use ParagonIE\BsidesOrl2017Talk\BaseHandler;
 
 /**
- * Class StaticPage
+ * Class Logs
+ * @package ParagonIE\BsidesOrl2017Talk\Handlers
  */
 class Logs extends BaseHandler
 {
@@ -26,9 +27,13 @@ class Logs extends BaseHandler
         $logs = [];
         $fp = \fopen(BSIDES_ROOT . '/data/live/access.log', 'rb');
         while ($line = \fgets($fp)) {
-            if (empty($line)) continue;
+            if (\trim($line) === '') {
+                continue;
+            }
             $json = \json_decode($line, true);
-            if (empty($json)) continue;
+            if (empty($json)) {
+                continue;
+            }
             $logs []= $json;
         }
         \fclose($fp);

@@ -1,0 +1,13 @@
+{% extends "base.twig" %}
+
+{% block main %}
+    <h4>Add a User</h4>
+
+    {% set personnelForm = "blank" %}
+
+    {% include "add-user-form.twig" %}
+
+    <hr />
+
+    <a href="/">Return</a>
+{% endblock %}

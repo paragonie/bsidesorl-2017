@@ -1,0 +1,22 @@
+
+<form method="post" class="form" action="/personnel">
+    <div class="form-row">
+        <label for="username" class="label">Username:</label>
+        <input id="username" class="form-control" type="text" name="username" placeholder="jsmith1337" />
+    </div>
+    <div class="form-row">
+        <label for="realname" class="label">Real name:</label>
+        <input id="realname" class="form-control" type="text" name="realname" placeholder="Jane Smith" required="required" />
+    </div>
+    <div class="form-row">
+        <label for="ssn" class="label">SSN:</label>
+        <input id="ssn" class="form-control" type="text" name="ssn" placeholder="123-45-6789" required="required" />
+    </div>
+    <div class="form-row">
+        <label for="ssn" class="label">Password:</label>
+        <input id="ssn" class="form-control" type="password" name="password" required="required" />
+    </div>
+    {% if personnelForm %}<input type="hidden" name="personnelForm" value="{{ personnelForm|e('html_attr') }}" />{% endif %}
+    <hr />
+    <button type="submit" class="btn btn-primary">Add User</button>
+</form>

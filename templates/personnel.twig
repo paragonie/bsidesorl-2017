@@ -1,0 +1,58 @@
+{% extends "base.twig" %}
+
+{% block main %}
+    <h4>Personnel</h4>
+
+    <form method="post" class="form form-horizontal">
+        <label for="search-ssn" class="label">SSN:</label>
+        <input id="search-ssn" class="form-inline form-control" type="text" name="search" placeholder="123-45-6789" value="{{ search|e('html_attr') }}" />
+        <button type="submit" class="btn btn-primary">Find User</button>
+    </form>
+
+    <hr />
+
+    <p>
+        Search for a user above, or create a new one below:
+    </p>
+
+    {% if users %}
+    <h4>Listing</h4>
+    <div class="table table-bordered table-responsive">
+        <table>
+            <thead>
+            <tr>
+                <th>Username</th>
+                <th>Realname</th>
+                <th>Index</th>
+                <th>SSN</th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <th>Username</th>
+                <th>Realname</th>
+                <th>Index</th>
+                <th>SSN</th>
+            </tr>
+            </tfoot>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user['username']|e('html') }}</td>
+                    <td>{{ user['realname']|e('html') }}</td>
+                    <td><code>{{ user['ssn_blindindex']|e('html') }}</code></td>
+                    <td><code>{{ user['ssn']|e('html') }}</code></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+
+    {% set personnelForm = "personnel" %}
+    {% include "add-user-form.twig" %}
+
+    <hr />
+
+    <a href="/">Return</a>
+{% endblock %}

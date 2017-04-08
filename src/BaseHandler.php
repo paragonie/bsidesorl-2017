@@ -15,6 +15,11 @@ use Psr\Log\LoggerInterface;
 class BaseHandler
 {
     /**
+     * @var \PDO
+     */
+    protected $db;
+
+    /**
      * @var LoggerInterface
      */
     protected $logger;
@@ -42,6 +47,17 @@ class BaseHandler
                 'autoescape' => true
             ]
         );
+
+        if (\file_exists(BSIDES_ROOT . '/data/live/database.sqlite')) {
+            $this->db = new \PDO('sqlite:' . BSIDES_ROOT . '/data/live/database.sqlite');
+        } else {
+            $this->db = new \PDO('sqlite:' . BSIDES_ROOT . '/data/live/database.sqlite');
+            $init = \file_get_contents(BSIDES_ROOT . '/schema.sql');
+            if (!\is_string($init)) {
+                throw new \TypeError('Expected a string');
+            }
+            $this->db->exec($init);
+        }
     }
 
     /**
