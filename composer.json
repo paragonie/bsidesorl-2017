@@ -1,5 +1,6 @@
 {
   "name": "paragonie/bsidesorl2017demo",
+  "license": "CC0",
   "description": "Demo code for a talk given at B-Sides Orlando, 2017",
   "autoload": {
     "psr-4": {
