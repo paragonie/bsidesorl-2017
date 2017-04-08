@@ -1,0 +1,20 @@
+{
+  "name": "paragonie/bsidesorl2017demo",
+  "description": "Demo code for a talk given at B-Sides Orlando, 2017",
+  "autoload": {
+    "psr-4": {
+      "ParagonIE\\BsidesOrl2017Talk\\": "src/"
+    }
+  },
+  "require": {
+    "php": "^7.1",
+    "ext-libsodium": "*",
+    "paragonie/constant_time_encoding": "^2",
+    "psr/log": "^1",
+    "twig/twig": "^2"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6",
+    "vimeo/psalm": "dev-master"
+  }
+}
