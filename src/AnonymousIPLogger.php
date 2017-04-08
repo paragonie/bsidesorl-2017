@@ -48,16 +48,21 @@ class AnonymousIPLogger implements LoggerInterface
      */
     public function __construct(string $logFile = '', string $keyPath = '/tmp/ip-keys')
     {
-        $this->file = \fopen($logFile, 'ab');
-        if (!\is_resource($this->file)) {
+        $file = \fopen($logFile, 'ab');
+        if (!\is_resource($file)) {
             throw new Error('Could not open file to append data');
         }
+        $this->file = $file;
 
         $today = (new \DateTime())
             ->format('Ymd');
 
         if (\file_exists($keyPath . '/' . $today)) {
-            $this->todaysKey = \file_get_contents($keyPath . '/' . $today);
+            $todaysKey = \file_get_contents($keyPath . '/' . $today);
+            if (!\is_string($todaysKey)) {
+                throw new \TypeError();
+            }
+            $this->todaysKey = $todaysKey;
         } else {
             $key = \random_bytes(32);
             if (\file_put_contents($keyPath . '/' . $today, $key) === false) {
@@ -72,7 +77,13 @@ class AnonymousIPLogger implements LoggerInterface
             ->format('Ymd');
         if (\file_exists($keyPath . '/' . $twoDaysAgo)) {
             // Get the size of the file:
+            /**
+             * @var int
+             */
             $size = \filesize($keyPath . '/' . $twoDaysAgo);
+            if (!\is_int($size)) {
+                throw new \TypeError();
+            }
             // Zero-fill the file:
             \file_put_contents(
                 $keyPath . '/' . $twoDaysAgo,

@@ -39,8 +39,11 @@ class DuplicatePasswords
     public function __construct(string $staticSaltFile)
     {
         if (\file_exists($staticSaltFile)) {
+            /**
+             * @var string
+             */
             $this->staticSalt = \file_get_contents($staticSaltFile);
-            if ($this->staticSalt === false) {
+            if (!\is_string($this->staticSalt)) {
                 throw new Error('Could not read the static salt file');
             }
         } else {
@@ -62,12 +65,18 @@ class DuplicatePasswords
      */
     public function hashPassword(HiddenString $passwd): array
     {
+        /**
+         * @var string
+         */
         $pwHash = \Sodium\crypto_pwhash_str(
             $passwd->getString(),
             \Sodium\CRYPTO_PWHASH_OPSLIMIT_INTERACTIVE,
             \Sodium\CRYPTO_PWHASH_MEMLIMIT_INTERACTIVE
         );
 
+        /**
+         * @var string
+         */
         $dupeDetector = $this->getPasswordIdentifier($passwd);
 
         return [$pwHash, $dupeDetector];

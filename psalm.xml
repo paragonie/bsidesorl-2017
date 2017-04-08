@@ -6,4 +6,9 @@
     <projectFiles>
         <directory name="src" />
     </projectFiles>
+    <issueHandlers>
+        <PropertyNotSetInConstructor errorLevel="info" />
+        <TooFewArguments errorLevel="info" />
+        <TooManyArguments errorLevel="info" />
+    </issueHandlers>
 </psalm>

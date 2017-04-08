@@ -63,7 +63,20 @@ class EncryptedSearch
          * Load the encryption key (n.b. it's not hard-codede)
          */
         if (\file_exists($keyDir . '/enc.key')) {
-            $encKey = Base64UrlSafe::decode(\file_get_contents($keyDir . '/enc.key'));
+            /**
+             * @var string
+             */
+            $raw = \file_get_contents($keyDir . '/enc.key');
+            if (!\is_string($raw)) {
+                throw new \TypeError();
+            }
+            /**
+             * @var string
+             */
+            $encKey = Base64UrlSafe::decode($raw);
+            if (!\is_string($encKey)) {
+                throw new \TypeError();
+            }
         } else {
             $encKey = \random_bytes(\Sodium\CRYPTO_SECRETBOX_KEYBYTES);
             \file_put_contents($keyDir . '/enc.key', Base64UrlSafe::encode($encKey));
@@ -74,7 +87,20 @@ class EncryptedSearch
          * Load the index key
          */
         if (\file_exists($keyDir . '/index.key')) {
-            $indexKey = Base64UrlSafe::decode(\file_get_contents($keyDir . '/index.key'));
+            /**
+             * @var string
+             */
+            $raw = \file_get_contents($keyDir . '/index.key');
+            if (!\is_string($raw)) {
+                throw new \TypeError();
+            }
+            /**
+             * @var string
+             */
+            $indexKey = Base64UrlSafe::decode($raw);
+            if (!\is_string($indexKey)) {
+                throw new \TypeError();
+            }
         } else {
             $indexKey = \random_bytes(\Sodium\CRYPTO_AUTH_KEYBYTES);
             \file_put_contents($keyDir . '/index.key', Base64UrlSafe::encode($indexKey));
