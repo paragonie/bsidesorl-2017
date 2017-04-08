@@ -134,6 +134,7 @@ class AnonymousIPLogger implements LoggerInterface
         // Append to file
         \fwrite($this->file,
             \json_encode([
+                'datetime' => (new \DateTime('NOW'))->format(\DateTime::ISO8601),
                 'level' => $level,
                 'message' => $message,
                 'context' => $context

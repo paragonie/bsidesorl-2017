@@ -1,0 +1,46 @@
+{% extends "base.twig" %}
+
+{% block main %}
+    <h2>B-Sides Orlando 2017 - Demo Code</h2>
+
+    <h4>Access Log (Daily Encrypted IPs)</h4>
+
+    <div class="table table-bordered table-responsive">
+    <table>
+        <thead>
+        <tr>
+            <th>Level</th>
+            <th>Time</th>
+            <th>IP</th>
+            <th>Method</th>
+            <th>URI</th>
+            <th>User Agent</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <th>Level</th>
+            <th>Time</th>
+            <th>IP</th>
+            <th>Method</th>
+            <th>URI</th>
+            <th>User Agent</th>
+        </tr>
+        </tfoot>
+        <tbody>
+            {% for line in logs %}
+                <tr>
+                    <td>{{ line.level|e('html') }}</td>
+                    <td>{{ line.datetime|e('html') }}</td>
+                    <td>{{ line.context['ip']|e('html') }}</td>
+                    <td>{{ line.context['method']|e('html') }}</td>
+                    <td>{{ line.context['uri']|e('html_attr') }}</td>
+                    <td>{{ line.context['user-agent']|e('html_attr') }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+    <a href="/">Return</a>
+{% endblock %}

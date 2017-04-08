@@ -45,15 +45,27 @@ class AnonymousIPLoggerTest extends TestCase
     {
         $this->logger->info('test', ['ip' => '127.0.0.1']);
         $this->logger->info('test', ['ip' => '127.0.0.2']);
+        $this->logger->info('test', ['ip' => '127.0.0.1']);
 
         $this->forceRotateKey();
 
         $pieces = \explode(PHP_EOL, file_get_contents($this->file));
+        $decoded = [
+            \json_decode($pieces[0], true),
+            \json_decode($pieces[1], true),
+            \json_decode($pieces[2], true),
+        ];
 
         $this->assertNotEquals(
-            $pieces[0],
-            $pieces[1],
+            $decoded[0]['context']['ip'],
+            $decoded[1]['context']['ip'],
             'Different IPs should result in different hashes'
+        );
+
+        $this->assertNotEquals(
+            $decoded[0]['context']['ip'],
+            $decoded[2]['context']['ip'],
+            'The same IP should result in the same hash'
         );
 
     }

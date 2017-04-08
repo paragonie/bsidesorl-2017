@@ -11,6 +11,8 @@
     "php": "^7.1",
     "ext-libsodium": "*",
     "paragonie/constant_time_encoding": "^2",
+    "nikic/fast-route": "*",
+    "guzzlehttp/guzzle": "^6",
     "psr/log": "^1",
     "twig/twig": "^2"
   },
